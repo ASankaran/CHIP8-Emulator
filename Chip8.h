@@ -1,15 +1,19 @@
 #ifndef GFX_X
-#define GFX_X 64
+#define GFX_X 32
 #endif
 
 #ifndef GFX_Y
-#define GFX_Y 32
+#define GFX_Y 64
 #endif
 
 class Chip8 {
 public:
 	void init();
 	void runCycle();
+	void loadProgram(const char*);
+	//Keypad states
+	unsigned char key[16];
+	bool drawFlag;
 private:
 	//4KB memory
 	unsigned char memory[4096];
@@ -26,9 +30,8 @@ private:
 	unsigned char soundTimer;
 	//Stack memory
 	unsigned short stack[16];
+	//Stack Pointer
 	unsigned short sp;
-	//Keypad states
-	unsigned char key[16];
 	//current opcode
 	unsigned short opcode;
 };
