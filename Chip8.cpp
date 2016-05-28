@@ -56,6 +56,11 @@ void Chip8::loadProgram(const char* programFile) {
 }
 
 void Chip8::runCycle() {
+	if(delayTimer > 0) {
+		delayTimer--;
+	} else if(soundTimer > 0) {
+		soundTimer--;
+	}
 	//Concatenate two bytes into opcode 
 	opcode = memory[pc] << 8 | memory[pc + 1];
 
@@ -93,7 +98,7 @@ void Chip8::runCycle() {
 			break;
 		//0x3XNN
 		case 0x3000:
-			if(V[(opcode & 0x0F00) >> 8] == opcode & 0x00FF) {
+			if(V[(opcode & 0x0F00) >> 8] == (opcode & 0x00FF)) {
 				pc += 4;
 			} else {
 				pc += 2;
@@ -101,7 +106,7 @@ void Chip8::runCycle() {
 			break;
 		//0x4XNN
 		case 0x4000:
-			if(V[(opcode & 0x0F00) >> 8] != opcode & 0x00FF) {
+			if(V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF)) {
 				pc += 4;
 			} else {
 				pc += 2;
@@ -134,17 +139,17 @@ void Chip8::runCycle() {
 					break;
 				//0x8XY1
 				case 0x0001:
-					V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] | V[(opcode & 0x00F0) >> 4];
+					V[(opcode & 0x0F00) >> 8] |= V[(opcode & 0x00F0) >> 4];
 					pc += 2;
 					break;
 				//0x8XY2
 				case 0x0002:
-					V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] & V[(opcode & 0x00F0) >> 4];
+					V[(opcode & 0x0F00) >> 8] &= V[(opcode & 0x00F0) >> 4];
 					pc += 2;
 					break;
 				//0x8XY3
 				case 0x0003:
-					V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] ^ V[(opcode & 0x00F0) >> 4];
+					V[(opcode & 0x0F00) >> 8] ^= V[(opcode & 0x00F0) >> 4];
 					pc += 2;
 					break;
 				//0x8XY4
@@ -228,12 +233,12 @@ void Chip8::runCycle() {
 				for (int x = 0; x < 8; ++x) {
 					//Isolate a single pixel, a bit, from pixelSet
 					//Update gfx value if pixel is a 1
-					if(pixelSet & (0x80 >> x) != 0) {
+					if((pixelSet & (0x80 >> x)) != 0) {
 						//Check if current pixel value is 1
-						if(gfx[xLoc + x + ((yLoc + y) * GFX_Y)] == 1) {
+						if(gfx[xLoc + x + ((yLoc + y) * GFX_X)] == 1) {
 							V[0xF] = 1;
 						}
-						gfx[xLoc + x + ((yLoc + y) * GFX_Y)] ^= 1;
+						gfx[xLoc + x + ((yLoc + y) * GFX_X)] ^= 1;
 					}
 				}
 			}
@@ -318,6 +323,7 @@ void Chip8::runCycle() {
 					memory[I] = V[(opcode & 0x0F00) >> 8] / 100;
 					memory[I] = V[(opcode & 0x0F00) >> 8] / 10 % 10;
 					memory[I] = V[(opcode & 0x0F00) >> 8] % 10;
+					pc += 2;
 					break;
 				//0xFX55
 				case 0x0055:

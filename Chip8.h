@@ -1,9 +1,9 @@
 #ifndef GFX_X
-#define GFX_X 32
+#define GFX_X 64
 #endif
 
 #ifndef GFX_Y
-#define GFX_Y 64
+#define GFX_Y 32
 #endif
 
 class Chip8 {
@@ -13,6 +13,8 @@ public:
 	void loadProgram(const char*);
 	//Keypad states
 	unsigned char key[16];
+	//Graphic Pixels
+	unsigned char gfx[GFX_X * GFX_Y];
 	bool drawFlag;
 private:
 	//4KB memory
@@ -23,8 +25,6 @@ private:
 	unsigned short I;
 	//Program counter
 	unsigned short pc;
-	//Graphic Pixels
-	unsigned char gfx[GFX_X * GFX_Y];
 	//Timer registers
 	unsigned char delayTimer;
 	unsigned char soundTimer;
