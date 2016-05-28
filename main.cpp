@@ -17,7 +17,7 @@ SDL_Rect pixels[GFX_X * GFX_Y];
 int main(int argc, char const *argv[])
 {
 	chip8.init();
-	chip8.loadProgram("C:\\Users\\Arnav\\Desktop\\pong2.c8");
+	chip8.loadProgram("C:\\Users\\Arnav\\Desktop\\tetris.c8");
 
 	SDL_Init(SDL_INIT_VIDEO);
 
@@ -42,6 +42,7 @@ int main(int argc, char const *argv[])
 	}
 
 	while(1) {
+		
 		if(SDL_PollEvent(&event)) {
 			switch(event.type) {
 				case SDL_QUIT:
@@ -165,7 +166,7 @@ int main(int argc, char const *argv[])
 			}
 			SDL_RenderPresent(renderer);
 		}
-		SDL_Delay(17);
+		SDL_Delay(10);
 	}
 	return 0;
 }

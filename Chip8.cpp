@@ -310,7 +310,7 @@ void Chip8::runCycle() {
 						V[0xF] = 0;
 					}
 					I += V[(opcode & 0x0F00) >> 8];
-					pc + 2;
+					pc += 2;
 					break;
 				//0xFX29
 				case 0x0029:
