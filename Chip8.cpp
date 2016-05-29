@@ -154,7 +154,7 @@ void Chip8::runCycle() {
 					break;
 				//0x8XY4
 				case 0x0004:
-					if(V[(opcode & 0x0F00) >> 8] + V[(opcode & 0x00F0) >> 4] > 0xFF) {
+					if((V[(opcode & 0x0F00) >> 8] + V[(opcode & 0x00F0) >> 4]) > 0xFF) {
 						V[0xF] = 1;
 					} else {
 						V[0xF] = 0;
@@ -165,9 +165,9 @@ void Chip8::runCycle() {
 				//0x8XY5
 				case 0x0005:
 					if(V[(opcode & 0x00F0) >> 4] > V[(opcode & 0x0F00) >> 8]) {
-						V[0xF] = 1;
-					} else {
 						V[0xF] = 0;
+					} else {
+						V[0xF] = 1;
 					}
 					V[(opcode & 0x0F00) >> 8] -= V[(opcode & 0x00F0) >> 4];
 					pc += 2;
@@ -181,17 +181,17 @@ void Chip8::runCycle() {
 				//0x8XY7
 				case 0x0007:
 					if(V[(opcode & 0x0F00) >> 8] > V[(opcode & 0x00F0) >> 4]) {
-						V[0xF] = 1;
-					} else {
 						V[0xF] = 0;
+					} else {
+						V[0xF] = 1;
 					}
-					V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4] - V[(opcode & 0x0F00) >> 8] ;
+					V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4] - V[(opcode & 0x0F00) >> 8];
 					pc += 2;
 					break;
 				//0x8XYE
 				case 0x000E:
 					V[0xF] = V[(opcode & 0x0F00) >> 8] >> 7;
-					V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] << 1;
+					V[(opcode & 0x0F00) >> 8] <<= 1;
 					pc += 2;
 					break;
 				default:

@@ -14,10 +14,17 @@ SDL_Surface *pixelBlackSurface, *pixelWhiteSurface;
 SDL_Texture *pixelBlack, *pixelWhite;
 SDL_Rect pixels[GFX_X * GFX_Y];
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
+
+	if(argc == 1) {
+		printf("%s\n", "Must specify a program to load.");
+		exit(1);
+	}
+
+	const char* programFile = argv[1];
+
 	chip8.init();
-	chip8.loadProgram("C:\\Users\\Arnav\\Desktop\\tetris.c8");
+	chip8.loadProgram(programFile);
 
 	SDL_Init(SDL_INIT_VIDEO);
 
