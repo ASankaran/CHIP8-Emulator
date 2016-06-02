@@ -20,6 +20,12 @@ A 0 B F                Z X C V
 
 Keyboard mapping and font provided by http://www.multigesture.net/articles/how-to-write-an-emulator-chip-8-interpreter/.
 
+Using the Emulator
+---------------------------------------
+- Place a 10 by 10 pixel black image named PixelBlack.bmp in the same folder as the executable.
+- Place a 10 by 10 pixel white image named PixelWhite.bmp in the same folder as the executable.
+- Run programs by passing them as a command line argument. `./<executable-name> <program-name>`
+
 Known Issues
 ---------------------------------------
 - Scoring in games such as pong and brix is not properly updated.
